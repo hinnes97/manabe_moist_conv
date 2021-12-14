@@ -1,0 +1,15 @@
+#!/bin/bash
+
+mkdir bin
+cd bin
+
+srcdir="$(pwd)/../src"
+
+gfortran -g -fcheck=all -Wall -c $srcdir/fsolve.f90
+gfortran -g -fcheck=all -Wall -c $srcdir/phys.f90
+gfortran -g -fcheck=all -Wall -c $srcdir/utils.f90
+gfortran -g -fcheck=all -Wall -c $srcdir/adjust.f90
+
+gfortran -g -fcheck=all -Wall -o main $srcdir/main.f90 utils.o adjust.o fsolve.o phys.o 
+
+mv main ../
