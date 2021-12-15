@@ -21,5 +21,4 @@ plt.xlabel('T (K)')
 plt.ylabel('P (Pa)')
 plt.tight_layout()
 
-print(for_dat[:,3])
 plt.savefig('fortran.pdf')

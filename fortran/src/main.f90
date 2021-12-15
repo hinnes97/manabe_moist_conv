@@ -4,15 +4,16 @@ program main
   
   implicit none
   
-  integer, parameter :: npz = 50
+  integer, parameter :: npz = 50 
   real, dimension(npz+1) :: pedge
   real, dimension(npz) :: p, T, q, dp, Told
   logical, dimension(npz) :: mask
   integer :: k, file, iostat
 
+  ! Set up pressure, temp and humidity arrays
   call logspace(1.,5.,pedge)
   call linspace(-600.,300., T)
-
+  
   do k=1,npz
      dp(k) = pedge(k+1) - pedge(k)
      p(k) = dp(k)/ (log(pedge(k+1)/pedge(k)))
@@ -20,14 +21,17 @@ program main
      q(k) = 0.1
   enddo
 
-  
+  ! Save initial temperature
   Told = T
+
+  ! Perform theh adjustment
   call adjust(p, dp, T, q, mask)
 
+  ! Save output to file
   file = 1
   open(1, file='output.txt')
   do k=1,npz
-     write(1,*) p(k), Told(k), T(k), mask(k)
+     write(1,*) p(k), Told(k), T(k)
   enddo
   close(1)
  
